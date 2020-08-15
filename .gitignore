@@ -30,3 +30,6 @@ out
 # Maven
 log/
 target/
+
+#database properties
+application.properties

@@ -1,4 +1,4 @@
-package ru.zhbert.corporatefoodchecker;
+package ru.zhbert.corporatefoodchecker.controller;
 
 import ru.zhbert.corporatefoodchecker.domain.Message;
 import ru.zhbert.corporatefoodchecker.repos.MessageRepo;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 

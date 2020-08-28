@@ -1,0 +1,7 @@
+package ru.zhbert.corporatefoodchecker.repos;
+
+import org.springframework.data.repository.CrudRepository;
+import ru.zhbert.corporatefoodchecker.domain.Dinner;
+
+public interface DinnerRepo extends CrudRepository<Dinner, Long> {
+}

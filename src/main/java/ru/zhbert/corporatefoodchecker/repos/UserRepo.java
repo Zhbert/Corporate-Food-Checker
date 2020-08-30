@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Created by Zhbert.
+ */
+
 package ru.zhbert.corporatefoodchecker.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;

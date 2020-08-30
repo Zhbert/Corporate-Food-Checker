@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Created by Zhbert.
+ */
+
 package ru.zhbert.corporatefoodchecker.domain;
 
 import org.springframework.security.core.GrantedAuthority;

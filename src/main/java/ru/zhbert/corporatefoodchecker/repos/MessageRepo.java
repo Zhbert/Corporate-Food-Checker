@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Created by Zhbert.
+ */
+
 package ru.zhbert.corporatefoodchecker.repos;
 
 import ru.zhbert.corporatefoodchecker.domain.Message;

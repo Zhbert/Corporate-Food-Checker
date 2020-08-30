@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Created by Zhbert.
+ */
+
 package ru.zhbert.corporatefoodchecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

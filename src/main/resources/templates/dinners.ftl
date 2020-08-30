@@ -15,7 +15,8 @@
                     <input type="text" class="form-control" name="name" placeholder="Введите наименование"/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="description" placeholder="Введите описание">
+                    <textarea class="form-control" name="description"
+                              placeholder="Введите описание и состав обеда"></textarea>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <div class="form-group">
@@ -34,11 +35,13 @@
         </tr>
         </thead>
         <tbody>
+        <#list dinners as dinner>
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
+            <th scope="row">${dinner.id}</th>
+            <td>${dinner.name}</td>
+            <td>${dinner.description}</td>
         </tr>
+        </#list>
         </tbody>
     </table>
 </@common.page>

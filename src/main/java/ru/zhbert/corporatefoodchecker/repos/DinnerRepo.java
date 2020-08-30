@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ru.zhbert.corporatefoodchecker.domain.Dinner;
 
 public interface DinnerRepo extends CrudRepository<Dinner, Long> {
+    Dinner findById(Integer id);
 }

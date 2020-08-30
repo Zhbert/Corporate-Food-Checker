@@ -12,6 +12,8 @@ import ru.zhbert.corporatefoodchecker.domain.Message;
 import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -37,5 +39,27 @@ public class DinnerControler {
         Iterable<Dinner> dinners = dinnerRepo.findAll();
         model.put("dinners", dinners);
         return "dinners";
+    }
+
+    @GetMapping("/admin/dinner-change")
+    public String changeDinner(@AuthenticationPrincipal User user,
+                               @RequestParam String id,
+                               Map<String, Object> model) {
+        Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
+        model.put("dinner", dinner);
+        return "dinnerchange";
+    }
+
+    @PostMapping("/admin/dinner-change")
+    public String saveDinnerChange(@AuthenticationPrincipal User user,
+                                   @RequestParam("name") String name,
+                                   @RequestParam("description") String description,
+                                   @RequestParam("id") String id,
+                                   Map<String, Object> model) {
+        Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
+        dinner.setDescription(description);
+        dinner.setName(name);
+        dinnerRepo.save(dinner);
+        return "redirect:/admin/dinners";
     }
 }

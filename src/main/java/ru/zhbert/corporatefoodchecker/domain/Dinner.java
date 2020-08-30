@@ -1,6 +1,7 @@
 package ru.zhbert.corporatefoodchecker.domain;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Table(name = "dinners")

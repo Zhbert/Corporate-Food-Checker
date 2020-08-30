@@ -62,4 +62,22 @@ public class DinnerControler {
         dinnerRepo.save(dinner);
         return "redirect:/admin/dinners";
     }
+
+    @GetMapping("/admin/dinner-delete")
+    public String deleteDinner(@AuthenticationPrincipal User user,
+                               @RequestParam String id,
+                               Map<String, Object> model) {
+        Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
+        model.put("dinner", dinner);
+        return "dinnerdelete";
+    }
+
+    @PostMapping("/admin/dinner-delete")
+    public String deleteDinner(@AuthenticationPrincipal User user,
+                               @RequestParam("id") String id) {
+        Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
+
+        dinnerRepo.delete(dinner);
+        return "redirect:/admin/dinners";
+    }
 }

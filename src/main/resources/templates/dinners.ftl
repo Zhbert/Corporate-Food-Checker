@@ -42,7 +42,7 @@
             <td>${dinner.name}</td>
             <td>${dinner.description}</td>
             <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinner.id}" role="button">Изменить</a>
-            <a class="btn btn-danger" href="/admin/dinner-delete" role="button">Удалить</a></td>
+            <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinner.id}" role="button">Удалить</a></td>
         </tr>
         </#list>
         </tbody>

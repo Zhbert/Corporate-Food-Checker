@@ -7,6 +7,8 @@
         <input type="hidden" value="${user.id}" name="userId">
         <label>Имя пользователя:</label>
         <input type="text" name="username" class="form-control" value="${user.username}">
+        <label class="mt-2">Пароль:</label>
+        <input type="text" name="password" class="form-control" value="${user.password}">
         <label class="mt-3">Права пользователя:</label>
         <#list roles as role>
             <div>

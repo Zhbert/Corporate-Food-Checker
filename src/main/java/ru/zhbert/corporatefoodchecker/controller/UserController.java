@@ -42,6 +42,7 @@ public class UserController {
     @PostMapping
     public String userSave(
             @RequestParam String username,
+            @RequestParam String password,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
 
@@ -55,6 +56,7 @@ public class UserController {
             }
         }
 
+        user.setPassword(password);
         user.setUsername(username);
         userRepo.save(user);
 

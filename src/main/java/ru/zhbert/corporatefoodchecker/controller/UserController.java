@@ -14,6 +14,7 @@ import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.UserRepo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("{user}")
-    public String userEdirForm(@PathVariable User user, Model model) {
+    public String userEdiForm(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
@@ -76,6 +77,27 @@ public class UserController {
     ) {
         User user = userRepo.findByUsername(username);
         userRepo.delete(user);
+        return "redirect:/user";
+    }
+
+    @PostMapping("/register")
+    public String addUser(
+            @RequestParam String name,
+            @RequestParam String password,
+            Map<String, Object> model) {
+        User userFormDB = userRepo.findByUsername(name);
+
+        if (userFormDB != null) {
+            model.put("message", "User exists!");
+            return "/user";
+        }
+
+        User user = new User();
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
+        user.setUsername(name);
+        user.setPassword(password);
+        userRepo.save(user);
         return "redirect:/user";
     }
 }

@@ -23,7 +23,7 @@
             </#if>
         </ul>
         <div class="navbar-text mr-3">${name}</div>
-        <#if isAdmin>
+        <#if isUser>
             <@login.logout />
         <#else><a class="btn btn-primary" href="/login" role="button">Вход</a>
         </#if>

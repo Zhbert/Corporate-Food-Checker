@@ -4,6 +4,30 @@
         <p class="mb-0">Список пользователей:</p>
     </blockquote>
 
+    ${message?ifExists}
+
+    <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Добавить нового пользователя
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="form-group mt-3">
+            <form method="post" action="/user/register">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Введите имя пользователя"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль"/>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-sm">Добавить пользователя</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <table class="table table-striped">
         <thead>
         <tr>

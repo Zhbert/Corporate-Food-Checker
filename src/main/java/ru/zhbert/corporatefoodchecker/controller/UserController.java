@@ -59,4 +59,23 @@ public class UserController {
 
         return "redirect:/user";
     }
+
+    @GetMapping("/user-delete/{user}")
+    public String delUser(
+            @PathVariable("user") String username,
+            Model model
+    ) {
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
+        return "userdelete";
+    }
+
+    @PostMapping("/user-delete/{user}")
+    public String confirmDelUser(
+            @PathVariable("user") String username
+    ) {
+        User user = userRepo.findByUsername(username);
+        userRepo.delete(user);
+        return "redirect:/user";
+    }
 }

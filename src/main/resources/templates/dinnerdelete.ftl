@@ -7,7 +7,7 @@
 
     <div>
         <div class="form-group mt-3">
-            <form action="/admin/dinner-delete" method="post">
+            <form action="/admin/dinner-delete/${dinner.id}" method="post">
                 <h3>
                     ${dinner.name}<br>
                     <small class="text-muted">${dinner.description}</small>

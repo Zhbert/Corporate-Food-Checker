@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.zhbert.corporatefoodchecker.domain.Dinner;
@@ -76,9 +77,9 @@ public class DinnerControler {
         return "dinnerdelete";
     }
 
-    @PostMapping("/admin/dinner-delete")
+    @PostMapping("/admin/dinner-delete/{id}")
     public String deleteDinner(@AuthenticationPrincipal User user,
-                               @RequestParam("id") String id) {
+                               @PathVariable("id") String id) {
         Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
 
         dinnerRepo.delete(dinner);

@@ -13,7 +13,7 @@
             <form method="post">
                 <select class="custom-select" id="inputGroupSelect01">
                     <#list dates as date>
-                    <option>${date}</option>
+                        <option>${date}</option>
                     </#list>
                 </select>
                 <select class="custom-select mt-3" id="inputGroupSelect01">
@@ -37,20 +37,22 @@
             <th scope="col">Описание</th>
         </tr>
         </thead>
-        <tbody>
         <#if dinnersByDate??>
+            <tbody>
+
             <#list dinnersByDate as dinnerByDate>
                 <tr>
                     <th scope="row">${dinnerByDate.dinnerDate}</th>
                     <td>${dinnerByDate.dinner.name}</td>
-                    <td>${dinnerByDate.dinner.description}</td>
+                    <td><#if dinnerByDate.dinner.description>${dinnerByDate.dinner.description}</#if></td>
                     <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinnerByDate.id}" role="button">Изменить</a>
                         <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinnerByDate.id}" role="button">Удалить</a>
                     </td>
                 </tr>
             </#list>
+
+            </tbody>
         </#if>
-        </tbody>
     </table>
 
 
@@ -66,12 +68,12 @@
             <th scope="col">Описание</th>
         </tr>
         </thead>
-        <tbody>
         <#if dinnersSets??>
+            <tbody>
+
             <#list dinnersSets as dinner>
                 <tr>
-                    <th scope="row">${dinner.id}</th>
-                    <td></td>
+                    <th scope="row">${dinner.dinnerDate}</th>
                     <td></td>
                     <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinner.id}"
                            role="button">Изменить</a>
@@ -79,7 +81,8 @@
                     </td>
                 </tr>
             </#list>
+
+            </tbody>
         </#if>
-        </tbody>
     </table>
 </@common.page>

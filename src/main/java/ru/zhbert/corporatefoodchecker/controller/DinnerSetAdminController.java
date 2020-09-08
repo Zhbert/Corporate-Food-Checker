@@ -12,6 +12,7 @@ import ru.zhbert.corporatefoodchecker.domain.DinnerSetAdmin;
 import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
 import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -27,17 +28,29 @@ public class DinnerSetAdminController {
     @GetMapping("/dinners-set")
     public String dinnersSetView(Map<String, Object> model) {
 
-        LocalDate localDate = LocalDate.now();
         localDates.clear();
-        localDates.add(localDate);
+        localDates.add(LocalDate.now());
 
-        for (int i=1; i<15; i++) {
-            localDate = LocalDate.now().plusDays(i);
-            localDates.add(localDate);
+        ArrayList<DinnerSetAdmin> dinnerSetAdminsByDate = (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now());
+        if (dinnerSetAdminsByDate.isEmpty()) {
+            DinnerSetAdmin dinnerSetAdmin = new DinnerSetAdmin();
+            dinnerSetAdmin.setDinnerDate(LocalDate.now());
+            dinnerSetAdminRepo.save(dinnerSetAdmin);
+        }
+
+        for (int i = 1; i < 15; i++) {
+            localDates.add(LocalDate.now().plusDays(i));
+            dinnerSetAdminsByDate.clear();
+            dinnerSetAdminsByDate =
+                    (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now().plusDays(i));
+            if (dinnerSetAdminsByDate.isEmpty()) {
+                DinnerSetAdmin dinnerSetAdmin = new DinnerSetAdmin();
+                dinnerSetAdmin.setDinnerDate(LocalDate.now().plusDays(i));
+                dinnerSetAdminRepo.save(dinnerSetAdmin);
+            }
         }
 
         Iterable<DinnerSetAdmin> dinnerSetAdmin = dinnerSetAdminRepo.findAll();
-        Iterable<DinnerSetAdmin> dinnerSetAdminsByDate = (Iterable<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now());
         Iterable<Dinner> dinners = dinnerRepo.findAll();
 
         model.put("dinners", dinners);

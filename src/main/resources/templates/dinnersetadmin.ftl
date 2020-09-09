@@ -47,7 +47,6 @@
                     <td><#if dinnerByDate.dinner??>${dinnerByDate.dinner.name}</#if></td>
                     <td><#if dinnerByDate.dinner??>${dinnerByDate.dinner.description}</#if></td>
                     <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinnerByDate.id}" role="button">Изменить</a>
-                        <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinnerByDate.id}" role="button">Удалить</a>
                     </td>
                 </tr>
             </#list>
@@ -67,6 +66,7 @@
             <th scope="col">Дата</th>
             <th scope="col">Тип обеда</th>
             <th scope="col">Описание</th>
+            <th scope="col">Функции</th>
         </tr>
         </thead>
         <#if dinnersSets??>
@@ -79,8 +79,6 @@
                     <td><#if dinnerSet.dinner??>${dinnerSet.dinner.description}</#if></td>
                     <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinnerSet.id}"
                            role="button">Изменить</a>
-                        <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinnerSet.id}"
-                           role="button">Удалить</a>
                     </td>
                 </tr>
             </#list>

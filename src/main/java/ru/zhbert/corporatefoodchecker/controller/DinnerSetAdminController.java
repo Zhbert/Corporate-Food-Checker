@@ -31,7 +31,8 @@ public class DinnerSetAdminController {
         localDates.clear();
         localDates.add(LocalDate.now());
 
-        ArrayList<DinnerSetAdmin> dinnerSetAdminsByDate = (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now());
+        ArrayList<DinnerSetAdmin> dinnerSetAdminsByDate =
+                (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now());
         if (dinnerSetAdminsByDate.isEmpty()) {
             DinnerSetAdmin dinnerSetAdmin = new DinnerSetAdmin();
             dinnerSetAdmin.setDinnerDate(LocalDate.now());
@@ -51,6 +52,16 @@ public class DinnerSetAdminController {
         }
 
         ArrayList<DinnerSetAdmin> dinnerSetAdmin = (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findAll();
+
+        for (DinnerSetAdmin dinnerSetAdmin1 : dinnerSetAdmin) {
+            if (dinnerSetAdmin1.getDinnerDate().isBefore(LocalDate.now())) {
+                dinnerSetAdminRepo.delete(dinnerSetAdmin1);
+            }
+        }
+
+        dinnerSetAdmin = (ArrayList<DinnerSetAdmin>) ((ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findAll());
+        dinnerSetAdmin.remove(0);
+
         Iterable<Dinner> dinners = dinnerRepo.findAll();
 
         dinnerSetAdminsByDate =

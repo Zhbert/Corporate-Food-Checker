@@ -50,8 +50,11 @@ public class DinnerSetAdminController {
             }
         }
 
-        Iterable<DinnerSetAdmin> dinnerSetAdmin = dinnerSetAdminRepo.findAll();
+        ArrayList<DinnerSetAdmin> dinnerSetAdmin = (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findAll();
         Iterable<Dinner> dinners = dinnerRepo.findAll();
+
+        dinnerSetAdminsByDate =
+                (ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findByDinnerDate(LocalDate.now());
 
         model.put("dinners", dinners);
         model.put("dates", localDates);

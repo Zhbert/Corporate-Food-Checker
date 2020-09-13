@@ -4,31 +4,6 @@
         <p class="mb-0">Установка обедов на текущую дату:</p>
     </blockquote>
 
-    <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-       aria-controls="collapseExample">
-        Настроить новую дату
-    </a>
-    <div class="collapse" id="collapseExample">
-        <div class="form-group mt-3">
-            <form method="post">
-                <select class="custom-select" id="inputGroupSelect01">
-                    <#list dates as date>
-                        <option>${date}</option>
-                    </#list>
-                </select>
-                <select class="custom-select mt-3" id="inputGroupSelect01">
-                    <#list dinners as dinner>
-                        <option>${dinner.name}</option>
-                    </#list>
-                </select>
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-success btn-sm">Добавить обед на выбранную дату</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <table class="table table-striped">
         <thead>
         <tr>
@@ -44,9 +19,19 @@
             <#list dinnersByDate as dinnerByDate>
                 <tr>
                     <th scope="row">${dinnerByDate.dinnerDate}</th>
-                    <td><#if dinnerByDate.dinner??>${dinnerByDate.dinner.name}</#if></td>
-                    <td><#if dinnerByDate.dinner??>${dinnerByDate.dinner.description}</#if></td>
-                    <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinnerByDate.id}" role="button">Изменить</a>
+                    <td>
+                        <ul class="list-group">
+                            <li class="list-group-item"><#if dinnerByDate.dinner??>${dinnerByDate.dinner.name}</#if></li>
+                            <li class="list-group-item"><#if dinnerByDate.dinnerTwo??>${dinnerByDate.dinnerTwo.name}</#if></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-group">
+                            <li class="list-group-item"><#if dinnerByDate.dinner??>${dinnerByDate.dinner.description}</#if></li>
+                            <li class="list-group-item"><#if dinnerByDate.dinnerTwo??>${dinnerByDate.dinnerTwo.description}</#if></li>
+                        </ul>
+                    </td>
+                    <td><a class="btn btn-primary" href="/admin/dinner-set?id=${dinnerByDate.id}" role="button">Изменить</a>
                     </td>
                 </tr>
             </#list>
@@ -75,9 +60,19 @@
             <#list dinnersSets as dinnerSet>
                 <tr>
                     <th scope="row">${dinnerSet.dinnerDate}</th>
-                    <td><#if dinnerSet.dinner??>${dinnerSet.dinner.name}</#if></td>
-                    <td><#if dinnerSet.dinner??>${dinnerSet.dinner.description}</#if></td>
-                    <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinnerSet.id}"
+                    <td>
+                        <ul class="list-group">
+                            <li class="list-group-item"><#if dinnerSet.dinner??>${dinnerSet.dinner.name}</#if></li>
+                            <li class="list-group-item"><#if dinnerSet.dinnerTwo??>${dinnerSet.dinnerTwo.name}</#if></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-group">
+                            <li class="list-group-item"><#if dinnerSet.dinner??>${dinnerSet.dinner.description}</#if></li>
+                            <li class="list-group-item"><#if dinnerSet.dinnerTwo??>${dinnerSet.dinnerTwo.description}</#if></li>
+                        </ul>
+                    </td>
+                    <td><a class="btn btn-primary" href="/admin/dinner-set?id=${dinnerSet.id}"
                            role="button">Изменить</a>
                     </td>
                 </tr>

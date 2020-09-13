@@ -17,14 +17,27 @@ public class DinnerSetAdmin {
     @JoinColumn(name = "dinner_id")
     private Dinner dinner;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dinner_two_id")
+    private Dinner dinnerTwo;
+
+    public Dinner getDinnerTwo() {
+        return dinnerTwo;
+    }
+
+    public void setDinnerTwo(Dinner dinnerTwo) {
+        this.dinnerTwo = dinnerTwo;
+    }
+
     private LocalDate dinnerDate;
 
     public DinnerSetAdmin() {
     }
 
-    public DinnerSetAdmin(Long id, Dinner dinner, LocalDate dinnerDate) {
+    public DinnerSetAdmin(Long id, Dinner dinner, Dinner dinnerTwo, LocalDate dinnerDate) {
         this.id = id;
         this.dinner = dinner;
+        this.dinnerTwo = dinnerTwo;
         this.dinnerDate = dinnerDate;
     }
 

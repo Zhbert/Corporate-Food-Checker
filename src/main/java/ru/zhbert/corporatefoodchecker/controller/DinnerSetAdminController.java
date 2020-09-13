@@ -5,10 +5,14 @@
 package ru.zhbert.corporatefoodchecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.zhbert.corporatefoodchecker.domain.Dinner;
 import ru.zhbert.corporatefoodchecker.domain.DinnerSetAdmin;
+import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
 import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
 
@@ -25,7 +29,7 @@ public class DinnerSetAdminController {
 
     private List<LocalDate> localDates = new ArrayList<>();
 
-    @GetMapping("/dinners-set")
+    @GetMapping("/admin/dinners-set")
     public String dinnersSetView(Map<String, Object> model) {
 
         localDates.clear();
@@ -72,5 +76,43 @@ public class DinnerSetAdminController {
         model.put("dinnersSets", dinnerSetAdmin);
         model.put("dinnersByDate", dinnerSetAdminsByDate);
         return "dinnersetadmin";
+    }
+
+    @GetMapping("/admin/dinner-set")
+    public String changeDinnerByDate(@AuthenticationPrincipal User user,
+                                     @RequestParam String id,
+                                     Map<String, Object> model) {
+        if (user.isAdmin()) {
+            Optional<DinnerSetAdmin> dinnerSetAdminOptional = dinnerSetAdminRepo.findById(Long.valueOf(id));
+            if (dinnerSetAdminOptional.isPresent()) {
+                DinnerSetAdmin dinnerSetAdmin = dinnerSetAdminOptional.get();
+                model.put("dinnerSet", dinnerSetAdmin);
+                model.put("date", dinnerSetAdmin.getDinnerDate());
+                Iterable<Dinner> dinners = dinnerRepo.findAll();
+                model.put("dinners", dinners);
+                return "dinnersetchange";
+            }
+        }
+        return "errornotadmin";
+    }
+
+    @PostMapping("/admin/dinner-set/change")
+    public String setNewDinners(@RequestParam String set_id,
+                                @RequestParam String firstDinner,
+                                @RequestParam String secondDinner,
+                                @RequestParam Map<String, String> form) {
+        Optional<DinnerSetAdmin> dinnerSetAdminOptional = dinnerSetAdminRepo.findById(Long.valueOf(set_id));
+        if (dinnerSetAdminOptional.isPresent()) {
+            DinnerSetAdmin dinnerSetAdmin = dinnerSetAdminOptional.get();
+            Dinner dinner = dinnerRepo.findById(Integer.parseInt(firstDinner));
+            Dinner dinnerTwo = dinnerRepo.findById(Integer.parseInt(secondDinner));
+
+            dinnerSetAdmin.setDinner(dinner);
+            dinnerSetAdmin.setDinnerTwo(dinnerTwo);
+            dinnerSetAdminRepo.save(dinnerSetAdmin);
+        }
+
+
+        return "redirect:/admin/dinners-set";
     }
 }

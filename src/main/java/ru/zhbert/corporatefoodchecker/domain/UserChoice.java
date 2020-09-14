@@ -22,7 +22,7 @@ public class UserChoice {
     @JoinColumn(name = "dinner_id")
     private Dinner dinner;
 
-    private LocalDate Date;
+    private LocalDate date;
 
     public UserChoice() {
     }
@@ -31,7 +31,7 @@ public class UserChoice {
         this.id = id;
         this.user = user;
         this.dinner = dinner;
-        Date = date;
+        this.date = date;
     }
 
     public Long getId() {
@@ -59,10 +59,10 @@ public class UserChoice {
     }
 
     public LocalDate getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(LocalDate date) {
-        Date = date;
+        this.date = date;
     }
 }

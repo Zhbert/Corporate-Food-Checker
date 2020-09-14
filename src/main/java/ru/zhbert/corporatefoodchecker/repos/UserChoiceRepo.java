@@ -13,4 +13,5 @@ import java.util.Optional;
 
 public interface UserChoiceRepo extends CrudRepository<UserChoice, Long> {
     Optional<UserChoice> findById(Long id);
+    ArrayList<UserChoice> findByDate(LocalDate date);
 }

@@ -5,9 +5,11 @@
 package ru.zhbert.corporatefoodchecker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.zhbert.corporatefoodchecker.domain.DinnerSetAdmin;
+import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.domain.UserChoice;
 import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
 import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
@@ -35,7 +37,8 @@ public class UserChoiceController {
     private ArrayList<UserChoice> userChoices = new ArrayList<>();
 
     @GetMapping("/user-choice")
-    public String userChoice(Map<String, Object> model) {
+    public String userChoice(@AuthenticationPrincipal User user,
+                             Map<String, Object> model) {
 
         localDates.clear();
 
@@ -46,6 +49,7 @@ public class UserChoiceController {
             if (userChoices.isEmpty()) {
                 UserChoice userChoice = new UserChoice();
                 userChoice.setDate(LocalDate.now().plusDays(i));
+                userChoice.setUser(user);
                 userChoiceRepo.save(userChoice);
             }
         }

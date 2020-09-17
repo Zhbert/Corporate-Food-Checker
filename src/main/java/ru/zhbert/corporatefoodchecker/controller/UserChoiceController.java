@@ -37,7 +37,6 @@ public class UserChoiceController {
     private UserChoiceRepo userChoiceRepo;
 
     private List<LocalDate> localDates = new ArrayList<>();
-    private ArrayList<DinnerSetAdmin> dinnerSetAdminsByDate;
     private ArrayList<UserChoice> userChoices = new ArrayList<>();
     private ArrayList<UserChoice> userChoicesByUser = new ArrayList<>();
 
@@ -58,6 +57,14 @@ public class UserChoiceController {
                 userChoiceRepo.save(userChoice);
             }
         }
+
+        ArrayList<UserChoice> userChoicesDel = (ArrayList<UserChoice>) userChoiceRepo.findAll();
+        for (UserChoice choice1 : userChoicesDel) {
+            if (choice1.getDate().isBefore(LocalDate.now())) {
+                userChoiceRepo.delete(choice1);
+            }
+        }
+
         userChoicesByUser.clear();
         for (int i = 0; i < 15; i++) {
             userChoices.clear();

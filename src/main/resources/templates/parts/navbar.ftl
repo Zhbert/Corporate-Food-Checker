@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/dinners-set">Настройка обедов по датам</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/view-choices">Таблица обедов</a>
+                </li>
             </#if>
         </ul>
         <div class="navbar-text mr-3">${name}</div>

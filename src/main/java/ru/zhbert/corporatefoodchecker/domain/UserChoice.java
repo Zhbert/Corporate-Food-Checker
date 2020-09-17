@@ -65,4 +65,11 @@ public class UserChoice {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public boolean isExists() {
+        if(this.dinner != null) {
+            return true;
+        }
+        return false;
+    }
 }

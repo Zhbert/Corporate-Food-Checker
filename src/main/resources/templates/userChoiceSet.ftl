@@ -98,7 +98,21 @@
                             </li>
                         </ul>
                     </td>
-                    <td><button type="submit" class="btn btn-primary">Сохранить</button>
+                    <td>
+                        <#list dsa as dsa>
+                            <#if dsa??>
+                                <#if dsa.dinnerDate == choice.date>
+                                    <#if dsa.dinner??>
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    <#else>
+                                        <button type="submit" class="btn btn-primary" disabled>Сохранить</button>
+                                        <div class="alert alert-danger" role="alert">
+                                            Обед не назначен администратором!
+                                        </div>
+                                    </#if>
+                                </#if>
+                            </#if>
+                        </#list>
                     </td>
                 </tr>
                 </tbody>

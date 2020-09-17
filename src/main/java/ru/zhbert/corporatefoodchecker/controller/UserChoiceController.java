@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.zhbert.corporatefoodchecker.domain.Dinner;
 import ru.zhbert.corporatefoodchecker.domain.DinnerSetAdmin;
 import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.domain.UserChoice;
@@ -20,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class UserChoiceController {
@@ -27,7 +31,7 @@ public class UserChoiceController {
     private DinnerSetAdminRepo dinnerSetAdminRepo;
 
     @Autowired
-    private UserRepo userRepo;
+    private DinnerRepo dinnerRepo;
 
     @Autowired
     private UserChoiceRepo userChoiceRepo;
@@ -35,6 +39,7 @@ public class UserChoiceController {
     private List<LocalDate> localDates = new ArrayList<>();
     private ArrayList<DinnerSetAdmin> dinnerSetAdminsByDate;
     private ArrayList<UserChoice> userChoices = new ArrayList<>();
+    private ArrayList<UserChoice> userChoicesByUser = new ArrayList<>();
 
     @GetMapping("/user-choice")
     public String userChoice(@AuthenticationPrincipal User user,
@@ -45,7 +50,7 @@ public class UserChoiceController {
         for (int i = 0; i < 15; i++) {
             localDates.add(LocalDate.now().plusDays(i));
             userChoices.clear();
-            userChoices = userChoiceRepo.findByDate(LocalDate.now().plusDays(i));
+            userChoices = userChoiceRepo.findByDateAndUser(LocalDate.now().plusDays(i), user);
             if (userChoices.isEmpty()) {
                 UserChoice userChoice = new UserChoice();
                 userChoice.setDate(LocalDate.now().plusDays(i));
@@ -53,12 +58,51 @@ public class UserChoiceController {
                 userChoiceRepo.save(userChoice);
             }
         }
-
-        Iterable<UserChoice> userChoices = userChoiceRepo.findAll();
+        userChoicesByUser.clear();
+        for (int i = 0; i < 15; i++) {
+            userChoices.clear();
+            userChoices = userChoiceRepo.findByDateAndUser(LocalDate.now().plusDays(i), user);
+            if (!userChoices.isEmpty()) {
+                userChoicesByUser.add(userChoices.get(0));
+            }
+        }
         Iterable<DinnerSetAdmin> dinnerSetAdmins = dinnerSetAdminRepo.findAll();
-        model.put("choices", userChoices);
+        model.put("choices", userChoicesByUser);
         model.put("dsa", dinnerSetAdmins);
 
         return "userChoice";
+    }
+
+    @GetMapping("/user-choice/set")
+    public String setUserChoice(Map<String, Object> model,
+                                @RequestParam String id) {
+        Optional<UserChoice> userChoice = userChoiceRepo.findById(Long.valueOf(id));
+        UserChoice choice = new UserChoice();
+        if (userChoice.isPresent()) {
+            choice = userChoice.get();
+            model.put("choice", choice);
+        }
+
+        Iterable<DinnerSetAdmin> dinnerSetAdmin = dinnerSetAdminRepo.findByDinnerDate(choice.getDate());
+        model.put("dsa", dinnerSetAdmin);
+
+        return "userChoiceSet";
+    }
+
+    @PostMapping("/user-choice/set")
+    public String setUserChoicePost(Map<String, Object> model,
+                                    @AuthenticationPrincipal User user,
+                                    @RequestParam String choiceId,
+                                    @RequestParam String dinner_id) {
+
+        Optional<UserChoice> choice = userChoiceRepo.findById(Long.valueOf(choiceId));
+        if (choice.isPresent()) {
+            UserChoice userChoice = choice.get();
+            Dinner dinner = dinnerRepo.findById(Integer.parseInt(dinner_id));
+            userChoice.setDinner(dinner);
+            userChoiceRepo.save(userChoice);
+        }
+
+        return "redirect:/user-choice";
     }
 }

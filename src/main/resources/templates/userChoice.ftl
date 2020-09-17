@@ -8,7 +8,7 @@
         <thead>
         <tr>
             <th scope="col">Дата</th>
-            <th scope="col">Возможные обеды</th>
+            <th scope="col">Название обеда</th>
             <th scope="col">Описание</th>
             <th scope="col">Функции</th>
         </tr>
@@ -21,56 +21,22 @@
                     <td>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <#list dsa as dsa>
-                                    <#if dsa??>
-                                        <#if dsa.dinnerDate == choice.date>
-                                            <#if dsa.dinner??>
-                                                ${dsa.dinner.name}
-                                            </#if>
-                                        </#if>
-                                    </#if>
-                                </#list>
-                            </li>
-                            <li class="list-group-item">
-                                <#list dsa as dsa>
-                                    <#if dsa??>
-                                        <#if dsa.dinnerDate == choice.date>
-                                            <#if dsa.dinnerTwo??>
-                                                ${dsa.dinnerTwo.name}
-                                            </#if>
-                                        </#if>
-                                    </#if>
-                                </#list>
+                                <#if choice.dinner??>
+                                    ${choice.dinner.name}
+                                </#if>
                             </li>
                         </ul>
                     </td>
                     <td>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <#list dsa as dsa>
-                                    <#if dsa??>
-                                        <#if dsa.dinnerDate == choice.date>
-                                            <#if dsa.dinner??>
-                                                ${dsa.dinner.description}
-                                            </#if>
-                                        </#if>
-                                    </#if>
-                                </#list>
-                            </li>
-                            <li class="list-group-item">
-                                <#list dsa as dsa>
-                                    <#if dsa??>
-                                        <#if dsa.dinnerDate == choice.date>
-                                            <#if dsa.dinnerTwo??>
-                                                ${dsa.dinnerTwo.description}
-                                            </#if>
-                                        </#if>
-                                    </#if>
-                                </#list>
+                                <#if choice.dinner??>
+                                    ${choice.dinner.description}
+                                </#if>
                             </li>
                         </ul>
                     </td>
-                    <td><a class="btn btn-primary" href="/admin/dinner-set?id=${choice.id}"
+                    <td><a class="btn btn-primary" href="/user-choice/set?id=${choice.id}"
                            role="button">Изменить</a>
                     </td>
                 </tr>

@@ -10,9 +10,11 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            <#if isUser>
             <li class="nav-item">
                 <a class="nav-link" href="/user-choice">Мои обеды</a>
             </li>
+            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/dinners">Обеды</a>

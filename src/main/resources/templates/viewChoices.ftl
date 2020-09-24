@@ -18,12 +18,12 @@
                 <th scope="row">${counter.date}</th>
                 <td>
                     <#if counter.dinnerOne??>
-                        ${counter.dinnerOne}, ${counter.dinOneCount}
+                        ${counter.dinnerOne},<br> ${counter.dinOneCount} шт.
                     </#if>
                 </td>
                 <td>
                     <#if counter.dinnerTwo??>
-                        ${counter.dinnerTwo}, ${counter.dinTwoCount}
+                        ${counter.dinnerTwo}, <br>${counter.dinTwoCount} шт.
                     </#if>
                 </td>
             </tr>

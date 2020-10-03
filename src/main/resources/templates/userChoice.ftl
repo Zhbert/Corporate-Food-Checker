@@ -44,4 +44,22 @@
             </tbody>
         </#if>
     </table>
+    <#if choices??>
+        <#list choices as choice>
+            <div class="container">
+                <button type="button" class="btn <#if choice.dinner??>btn-primary<#else>btn-secondary</#if> mt-3 btn-lg btn-block">
+                    <table class="container">
+                        <td width="50%">${choice.date}</td>
+                        <td width="50%">
+                            <#if choice.dinner??>
+                                <b>${choice.dinner.name}</b>
+                                <br>
+                                ${choice.dinner.description}
+                            </#if>
+                        </td>
+                    </table>
+                </button>
+            </div>
+        </#list>
+    </#if>
 </@common.page>

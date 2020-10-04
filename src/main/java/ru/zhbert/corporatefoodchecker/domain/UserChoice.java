@@ -5,7 +5,10 @@
 package ru.zhbert.corporatefoodchecker.domain;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 @Entity
 @Table(name = "user_choices")
@@ -24,6 +27,9 @@ public class UserChoice {
 
     private LocalDate date;
 
+    @JoinColumn(name = "day_of_week")
+    private String dayOfWeek;
+
     public UserChoice() {
     }
 
@@ -32,6 +38,7 @@ public class UserChoice {
         this.user = user;
         this.dinner = dinner;
         this.date = date;
+        this.dayOfWeek = getDayOfWeek(date);
     }
 
     public Long getId() {
@@ -62,8 +69,17 @@ public class UserChoice {
         return date;
     }
 
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
     public void setDate(LocalDate date) {
         this.date = date;
+        this.dayOfWeek = getDayOfWeek(date);
     }
 
     public boolean isExists() {
@@ -71,5 +87,15 @@ public class UserChoice {
             return true;
         }
         return false;
+    }
+
+    private String getDayOfWeek(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        System.out.println("dayOfWeek.toString()" + dayOfWeek.toString());
+        Locale localeRu = new Locale("ru", "RU");
+
+        String stringDate = dayOfWeek.getDisplayName(TextStyle.FULL,localeRu);
+
+        return stringDate.substring(0, 1).toUpperCase() + stringDate.substring(1);
     }
 }

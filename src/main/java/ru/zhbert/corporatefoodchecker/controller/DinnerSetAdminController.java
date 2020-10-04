@@ -17,10 +17,7 @@ import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
 import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class DinnerSetAdminController {
@@ -66,6 +63,7 @@ public class DinnerSetAdminController {
         }
 
         dinnerSetAdmin = (ArrayList<DinnerSetAdmin>) ((ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findAll());
+        Collections.reverse(dinnerSetAdmin);
         dinnerSetAdmin.remove(0);
 
         Iterable<Dinner> dinners = dinnerRepo.findAll();

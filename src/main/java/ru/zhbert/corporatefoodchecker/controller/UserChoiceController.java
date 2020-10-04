@@ -4,6 +4,7 @@
 
 package ru.zhbert.corporatefoodchecker.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,10 @@ import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
 import ru.zhbert.corporatefoodchecker.repos.UserChoiceRepo;
 import ru.zhbert.corporatefoodchecker.repos.UserRepo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class UserChoiceController {
@@ -39,10 +39,11 @@ public class UserChoiceController {
     private List<LocalDate> localDates = new ArrayList<>();
     private ArrayList<UserChoice> userChoices = new ArrayList<>();
     private ArrayList<UserChoice> userChoicesByUser = new ArrayList<>();
+    private Boolean isAfter;
 
     @GetMapping("/user-choice")
     public String userChoice(@AuthenticationPrincipal User user,
-                             Map<String, Object> model) {
+                             Map<String, Object> model) throws ParseException {
 
         localDates.clear();
 
@@ -76,6 +77,18 @@ public class UserChoiceController {
         Iterable<DinnerSetAdmin> dinnerSetAdmins = dinnerSetAdminRepo.findAll();
         model.put("choices", userChoicesByUser);
         model.put("dsa", dinnerSetAdmins);
+
+        //check time (10:00)
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        dateFormat.format(date);
+
+        if (dateFormat.parse(dateFormat.format(date)).after(dateFormat.parse("10:00"))) {
+            isAfter = true;
+        } else {
+            isAfter = false;
+        }
+        model.put("isAfter", isAfter);
 
         return "userChoice";
     }

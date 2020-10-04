@@ -63,7 +63,7 @@ public class DinnerSetAdminController {
         }
 
         dinnerSetAdmin = (ArrayList<DinnerSetAdmin>) ((ArrayList<DinnerSetAdmin>) dinnerSetAdminRepo.findAll());
-        Collections.reverse(dinnerSetAdmin);
+        //Collections.reverse(dinnerSetAdmin);
         dinnerSetAdmin.remove(0);
 
         Iterable<Dinner> dinners = dinnerRepo.findAll();

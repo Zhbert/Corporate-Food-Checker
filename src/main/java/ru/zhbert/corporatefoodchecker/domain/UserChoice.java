@@ -4,6 +4,8 @@
 
 package ru.zhbert.corporatefoodchecker.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,7 +16,7 @@ import java.util.Locale;
 @Table(name = "user_choices")
 public class UserChoice {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

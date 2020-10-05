@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Created by Zhbert.
+ */
+
 create table dinners (
     id integer not null,
     description varchar(255),

@@ -12,23 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import ru.zhbert.corporatefoodchecker.domain.Role;
 import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.UserRepo;
+import ru.zhbert.corporatefoodchecker.service.UserService;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
 public class UserController {
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserRepo userRepo;
 
     @GetMapping
     public String userList(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
         return "userList";
     }
 
@@ -46,19 +47,7 @@ public class UserController {
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
 
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-        user.getRoles().clear();
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        user.setPassword(password);
-        user.setUsername(username);
-        userRepo.save(user);
+        userService.saveUser(user, username, password, form);
 
         return "redirect:/user";
     }
@@ -87,19 +76,8 @@ public class UserController {
             @RequestParam String name,
             @RequestParam String password,
             Map<String, Object> model) {
-        User userFormDB = userRepo.findByUsername(name);
-
-        if (userFormDB != null) {
-            model.put("message", "User exists!");
-            return "/user";
-        }
-
-        User user = new User();
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        user.setUsername(name);
-        user.setPassword(password);
-        userRepo.save(user);
+        userService.addUser(name, password, model);
         return "redirect:/user";
+
     }
 }

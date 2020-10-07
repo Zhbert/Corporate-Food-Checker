@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping
     public String userSave(
-            @RequestParam String userId,
+            @RequestParam("userId") String userId,
             @Valid User user,
             BindingResult bindingResult,
             @RequestParam Map<String, String> form,

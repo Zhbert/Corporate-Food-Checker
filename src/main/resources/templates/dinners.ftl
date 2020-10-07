@@ -12,18 +12,18 @@
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" class="form-control ${(usernameError??)?string('is-invalid', '')}"
-                           value="<#if message??>${message.name}</#if>"
+                    <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
+                           value="<#if error??>${error.name}</#if>"
                            name="name" placeholder="Введите наименование"/>
                     <#if nameError??>
                         <div class="invalid-feedback">
-                            ${usernameError}
+                            ${nameError}
                         </div>
                     </#if>
                 </div>
                 <div class="form-group">
                     <textarea class="form-control ${(descriptionError??)?string('is-invalid', '')}"
-                              value="<#if message??>${message.description}</#if>"
+                              value="<#if error??>${error.description}</#if>"
                               name="description"
                               placeholder="Введите описание и состав обеда"></textarea>
                     <#if descriptionError??>

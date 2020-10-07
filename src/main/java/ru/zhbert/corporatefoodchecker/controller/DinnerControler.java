@@ -46,10 +46,10 @@ public class DinnerControler {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("message", dinner);
+            model.addAttribute("error", dinner);
         } else {
             dinnerRepo.save(dinner);
-            model.addAttribute("message", null);
+            model.addAttribute("error", null);
         }
         Iterable<Dinner> dinners = dinnerRepo.findAll();
         model.addAttribute("dinners", dinners);
@@ -67,14 +67,23 @@ public class DinnerControler {
 
     @PostMapping("/admin/dinner-change")
     public String saveDinnerChange(@AuthenticationPrincipal User user,
-                                   @RequestParam("name") String name,
-                                   @RequestParam("description") String description,
                                    @RequestParam("id") String id,
-                                   Map<String, Object> model) {
-        Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
-        dinner.setDescription(description);
-        dinner.setName(name);
-        dinnerRepo.save(dinner);
+                                   @Valid Dinner dinner,
+                                   BindingResult bindingResult,
+                                   Model model) {
+        Dinner dinnerDB = dinnerRepo.findById(Integer.parseInt(id));
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("error", dinner);
+            model.addAttribute("dinner", dinnerDB);
+            return "dinnerchange";
+        } else {
+            dinnerDB.setName(dinner.getName());
+            dinnerDB.setDescription(dinner.getDescription());
+            dinnerRepo.save(dinnerDB);
+            model.addAttribute("error", null);
+        }
         return "redirect:/admin/dinners";
     }
 

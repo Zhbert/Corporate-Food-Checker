@@ -8,12 +8,21 @@
         <div class="form-group mt-3">
             <form action="/admin/dinner-change" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="name" value="${dinner.name}"/>
+                    <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
+                           name="name" value="<#if error??>${error.name}<#else>${dinner.name}</#if>"/>
+                    <#if nameError??>
+                        <div class="invalid-feedback">
+                            ${nameError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" name="description">
-                        ${dinner.description}
-                    </textarea>
+                    <textarea class="form-control ${(descriptionError??)?string('is-invalid', '')}" name="description"><#if error??>${error.description}<#else>${dinner.description}</#if></textarea>
+                    <#if descriptionError??>
+                        <div class="invalid-feedback">
+                            ${descriptionError}
+                        </div>
+                    </#if>
                 </div>
                 <input type="hidden" name="id" value="${dinner.id}">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>

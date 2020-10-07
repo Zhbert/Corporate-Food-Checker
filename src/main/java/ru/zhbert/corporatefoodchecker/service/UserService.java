@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ru.zhbert.corporatefoodchecker.domain.Role;
 import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.UserRepo;
@@ -58,11 +59,11 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public Boolean addUser(String name, String password, Map<String, Object> model) {
+    public Boolean addUser(String name, String password, Model model) {
         User userFormDB = userRepo.findByUsername(name);
 
         if (userFormDB != null) {
-            model.put("message", "User exists!");
+            model.addAttribute("message", "User exists!");
             return false;
         }
 

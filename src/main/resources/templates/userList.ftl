@@ -4,7 +4,15 @@
         <p class="mb-0">Список пользователей:</p>
     </blockquote>
 
-    ${message?ifExists}
+
+    <#if message??>
+        <#if message == "User exists!">
+            <div class="alert alert-danger" role="alert">
+                Такой пользователь уже существует!
+            </div>
+        </#if>
+    </#if>
+
 
     <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
        aria-controls="collapseExample">
@@ -14,10 +22,25 @@
         <div class="form-group mt-3">
             <form method="post" action="/user/register">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="name" placeholder="Введите имя пользователя"/>
+                    <input type="text" class="form-control ${(usernameError??)?string('is-invalid', '')}"
+                           name="username"
+                           value="<#if error??>${error.username}</#if>"
+                           placeholder="Введите имя пользователя"/>
+                    <#if usernameError??>
+                        <div class="invalid-feedback">
+                            ${usernameError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Пароль"/>
+                    <input type="password" name="password"
+                           class="form-control ${(passwordError??)?string('is-invalid', '')}"
+                           placeholder="Пароль"/>
+                    <#if passwordError??>
+                        <div class="invalid-feedback">
+                            ${passwordError}
+                        </div>
+                    </#if>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <div class="form-group">

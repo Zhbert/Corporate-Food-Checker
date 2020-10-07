@@ -25,7 +25,9 @@ public class User implements UserDetails {
     @Length(max = 255, message = "Имя пользователя слишком длинное!")
     private String username;
     @NotBlank(message = "Пароль не может быть пустым!")
+    @Length(max = 255, message = "Имя пользователя слишком длинное!")
     private String password;
+
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

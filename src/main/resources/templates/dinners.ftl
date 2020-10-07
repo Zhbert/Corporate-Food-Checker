@@ -12,12 +12,12 @@
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
+                    <input type="text" class="form-control ${(usernameError??)?string('is-invalid', '')}"
                            value="<#if message??>${message.name}</#if>"
                            name="name" placeholder="Введите наименование"/>
                     <#if nameError??>
                         <div class="invalid-feedback">
-                            ${nameError}
+                            ${usernameError}
                         </div>
                     </#if>
                 </div>

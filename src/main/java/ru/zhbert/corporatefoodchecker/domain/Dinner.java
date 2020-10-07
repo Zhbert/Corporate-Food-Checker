@@ -4,10 +4,10 @@
 
 package ru.zhbert.corporatefoodchecker.domain;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "dinners")
@@ -16,15 +16,20 @@ public class Dinner {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank(message = "Название обеда не должно быть пустым!")
+    @Length(max = 255, message = "Название слишком длинное!")
     private String name;
-    private String Description;
+
+    @NotBlank(message = "Описание обеда не должно быть пустым!")
+    @Length(max = 2048, message = "Описание слишком длинное!")
+    private String description;
 
     public Dinner() {
     }
 
     public Dinner(String name, String description) {
         this.name = name;
-        Description = description;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -44,10 +49,10 @@ public class Dinner {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 }

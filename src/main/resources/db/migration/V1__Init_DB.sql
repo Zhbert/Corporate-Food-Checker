@@ -4,7 +4,7 @@
 
 create table dinners (
     id integer not null,
-    description varchar(255),
+    description varchar(2048),
     name varchar(255),
     primary key (id)
 ) engine=MyISAM;

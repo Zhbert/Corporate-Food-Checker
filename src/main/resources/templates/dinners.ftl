@@ -12,11 +12,25 @@
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="name" placeholder="Введите наименование"/>
+                    <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
+                           value="<#if message??>${message.name}</#if>"
+                           name="name" placeholder="Введите наименование"/>
+                    <#if nameError??>
+                        <div class="invalid-feedback">
+                            ${nameError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" name="description"
+                    <textarea class="form-control ${(descriptionError??)?string('is-invalid', '')}"
+                              value="<#if message??>${message.description}</#if>"
+                              name="description"
                               placeholder="Введите описание и состав обеда"></textarea>
+                    <#if descriptionError??>
+                        <div class="invalid-feedback">
+                            ${descriptionError}
+                        </div>
+                    </#if>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <div class="form-group">
@@ -37,13 +51,13 @@
         </thead>
         <tbody>
         <#list dinners as dinner>
-        <tr>
-            <th scope="row">${dinner.id}</th>
-            <td>${dinner.name}</td>
-            <td>${dinner.description}</td>
-            <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinner.id}" role="button">Изменить</a>
-            <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinner.id}" role="button">Удалить</a></td>
-        </tr>
+            <tr>
+                <th scope="row">${dinner.id}</th>
+                <td>${dinner.name}</td>
+                <td>${dinner.description}</td>
+                <td><a class="btn btn-primary" href="/admin/dinner-change?id=${dinner.id}" role="button">Изменить</a>
+                    <a class="btn btn-danger" href="/admin/dinner-delete?id=${dinner.id}" role="button">Удалить</a></td>
+            </tr>
         </#list>
         </tbody>
     </table>

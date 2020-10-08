@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.zhbert.corporatefoodchecker.domain.Dinner;
+import ru.zhbert.corporatefoodchecker.domain.DinnerSetAdmin;
 import ru.zhbert.corporatefoodchecker.domain.Message;
 import ru.zhbert.corporatefoodchecker.domain.User;
 import ru.zhbert.corporatefoodchecker.repos.DinnerRepo;
+import ru.zhbert.corporatefoodchecker.repos.DinnerSetAdminRepo;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +32,9 @@ import java.util.stream.Collectors;
 public class DinnerControler {
     @Autowired
     private DinnerRepo dinnerRepo;
+
+    @Autowired
+    private DinnerSetAdminRepo dinnerSetAdminRepo;
 
     @GetMapping("/admin/dinners")
     public String dinners(Model model) {
@@ -101,7 +107,12 @@ public class DinnerControler {
                                @PathVariable("id") String id) {
         Dinner dinner = dinnerRepo.findById(Integer.parseInt(id));
 
-        dinnerRepo.delete(dinner);
+        ArrayList<DinnerSetAdmin> dinnerSetAdmins = dinnerSetAdminRepo.findByDinnerOrDinnerTwo(dinner, dinner);
+
+        if (dinnerSetAdmins.isEmpty()) {
+            dinnerRepo.delete(dinner);
+        }
+
         return "redirect:/admin/dinners";
     }
 }

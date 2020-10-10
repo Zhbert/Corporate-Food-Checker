@@ -1,0 +1,7 @@
+CREATE USER 'foodchecker'@'localhost' IDENTIFIED BY 'password';
+
+CREATE DATABASE foodchecker DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+
+GRANT ALL PRIVILEGES ON foodchecker.* TO 'foodchecker'@'localhost';
+
+SHOW GRANTS FOR 'foodchecker'@'localhost';

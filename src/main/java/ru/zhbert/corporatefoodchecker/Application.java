@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2020. Created by Zhbert.
+ * Copyright (c) 2020.
+ * Created by Zhbert.
+ * Licensed by GPLv3.
  */
 
 package ru.zhbert.corporatefoodchecker;
